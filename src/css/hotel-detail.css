@@ -1,0 +1,83 @@
+
+.hotel-detail {
+    font-size: 1.8em;
+}
+
+.hotel-address, .hotel-excellent, .hotel-marketing, .hotel-name {
+    padding-bottom: 5px;
+}
+
+.hotel-name {
+    font-weight: 700;
+}
+
+.hotel-excellent {
+    font-weight: 600;
+    color: rgb(139, 139, 219);
+}
+
+.hotel-marketing {
+    font-weight: 700;
+    color: rgb(34, 201, 56);
+}
+
+.hotel-address-content {
+    font-weight: 500;
+}
+
+.hotel-address {
+    display: flex;
+
+}
+
+.hotel-address-icon {
+    padding-right: 5px;
+}
+
+.hotel-list-img {
+    margin: 0;
+    margin-left: -28px;
+    margin-right: -35px;
+}
+
+.hotel-list-img-item {
+    list-style: none;
+}
+
+.hotel-list-img-item img {
+    width: 95%;
+    height: 90%;
+}
+
+.footer-right-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hotel-detail-footer-right {
+   text-align: center;
+   background-color: #ebf3ff;
+   border-radius: 5px;
+}
+
+.footer-right-count-night {
+    font-weight: 400;
+}
+
+.footer-right-information {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-right-price {
+    font-weight: 700;
+}
+
+.footer-right-button button {
+    font-size: 1.2em;
+    padding: 10px;
+    margin-top: 10px;
+}

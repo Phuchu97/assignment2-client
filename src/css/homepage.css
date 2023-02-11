@@ -1,0 +1,168 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.search-date {
+    position: relative;
+    display: flex;
+}
+
+.date-range {
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+}
+
+.count-passenger, .count-passenger-content {
+    display: flex;
+    align-items: center;
+}
+
+.count-passenger-content {
+    justify-content: space-around;
+}
+
+.count-passenger-content-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.count-passenger-dot {
+    margin-top: 5px;
+    background-color: aliceblue;
+    width: 12px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.count-passenger-icon {
+    font-size: 2.5em;
+    align-self: center;
+    padding-right: 5px;
+}
+
+.count-passenger-name {
+    align-self: center;
+    font-size: 1.8em;
+    padding-left: 8px;
+}
+
+.count-passenger-input {
+    width: 40%;
+    border: none;
+    padding: 12px 9px;
+    font-size: 1.6em;
+    -webkit-appearance: none;
+    outline: navajowhite;
+}
+
+.nav-form-input {
+    font-size: 1.6em;
+    width: 80%;
+}
+
+.nav-form-icon {
+    font-size: 2.5em;
+    align-self: center;
+    padding-right: 10px;
+}
+
+
+
+
+
+
+/* Start Area Component */
+
+.area {
+    margin-top: 3rem;
+}
+
+.area-item {
+    position: relative;
+}
+
+.area-item img {
+    width: 100%;
+    height: 280px;
+    border-radius: 3rem;
+}
+
+.area-item-information {
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+}
+
+.area-item-information-name {
+    color: aliceblue;
+    font-size: 2.5vw;
+}
+
+.area-item-information-count-property {
+    margin: 0;
+    font-size: 2vw;
+    color: aliceblue;
+    font-weight: 600;
+}
+
+
+
+
+/* Start Type Component */
+
+.type-item img {
+    width: 95%;
+    height: 200px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.type-item-information-name {
+    font-size: 1.25vw;
+    font-weight: 700;
+}
+
+.type-item-information-count {
+    margin: 0;
+    font-size: 0.8vw;
+    font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+/* Start Guests Love Component */
+
+.guests-love-item img {
+    width: 100%;
+    min-height: 200px;
+    margin-bottom: 1rem;
+}
+
+
+.guests-love-item-information-address {
+    font-size: 1vw;
+    color: rgba(0, 0, 0, 0.8);
+    margin: 1rem 0;
+}
+
+.guests-love-item-information-price {
+    margin: 0;
+    font-size: 0.8vw;
+}

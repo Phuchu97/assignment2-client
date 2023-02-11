@@ -1,0 +1,50 @@
+.rdrCalendarWrapper  {
+    width: 90%;
+}
+
+.booking-form-right-input {
+    width: 100%;
+    font-size: 1em;
+}
+
+.form-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.payment {
+    padding-bottom: 100px;
+}
+
+.dropdown-payment {
+    margin-right: 116px;
+}
+
+.dropdown-payment button,.btn-reserve {
+    font-size: 1em;
+    padding: 10px;
+}
+
+.dropdown-payment div {
+    font-size: 1em;
+}
+
+.list-checkbox {
+    display: flex;
+    margin: 0;
+}
+
+.list-checkbox li{
+    list-style: none;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.list-checkbox li>p {
+    margin: 0;
+}
+
+.list-checkbox li>input {
+    cursor: pointer;
+    scale: 1.4;
+}
