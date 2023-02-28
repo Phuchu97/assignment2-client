@@ -1,40 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-function GuestsLoveComponent() {
-   
+function GuestsLoveComponent(props) {
   return (
     <div className="guests-love container mt-4 mb-4">
       <h1 style={{padding: '20px 0', fontSize: '2.5rem', fontWeight: 700}}>Homes guests love</h1>
       <div className="row">
-        <div className="guests-love-item col-4"> 
-            <Link to={'/hotel-detail'}>
-              <img src="https://phunugioi.com/wp-content/uploads/2020/10/anh-ha-noi.jpg" alt="" />
-              <div className="guests-love-item-information">
-                <a style={{fontSize: '1vw', fontWeight: 700}} href="#">HANOI ROYAL PALACE HOTEL 2</a>
-                <h6 className="guests-love-item-information-address">Ha Noi</h6>
-                <p className="guests-love-item-information-price">Starting from $150</p>
-              </div>
-            </Link>
-        </div>
-
-        <div className="guests-love-item col-4"> 
-            <img src="https://phunugioi.com/wp-content/uploads/2020/10/anh-ha-noi.jpg" alt="" />
-            <div className="guests-love-item-information">
-              <a style={{fontSize: '1vw', fontWeight: 700}} href="#">HANOI ROYAL PALACE HOTEL 2</a>
-              <h6 className="guests-love-item-information-address">Ha Noi</h6>
-              <p className="guests-love-item-information-price">Starting from $150</p>
-            </div>
-        </div>
-
-        <div className="guests-love-item col-4"> 
-            <img src="https://phunugioi.com/wp-content/uploads/2020/10/anh-ha-noi.jpg" alt="" />
-            <div className="guests-love-item-information">
-              <a style={{fontSize: '1vw', fontWeight: 700}} href="#">HANOI ROYAL PALACE HOTEL 2</a>
-              <h6 className="guests-love-item-information-address">Ha Noi</h6>
-              <p className="guests-love-item-information-price">Starting from $150</p>
-            </div>
-        </div>
+          {
+            props.hotels !== undefined && props.hotels.slice(0,4).map((obj) => {
+                return (
+                  <div className="guests-love-item col-4">
+                    <Link to={`/hotel-detail/${obj._id}`}>
+                      <img src={obj.photos[0]} alt="" />
+                      <div className="guests-love-item-information">
+                        <a style={{fontSize: '1vw', fontWeight: 700}} href="#">{obj.name}</a>
+                        <h6 className="guests-love-item-information-address">{obj.city}</h6>
+                        <p className="guests-love-item-information-price">Starting from ${obj.price}</p>
+                      </div>
+                    </Link>
+                  </div>
+                )
+              })
+            }
       </div>
     </div>
   );

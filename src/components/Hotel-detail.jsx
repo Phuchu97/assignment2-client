@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../css/hotel-detail.css'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { getHotelDetail } from "../FetchApi";
 
 function HotelDetailComponent() {
-    const navigate = useNavigate();
+    const {id} = useParams();
     const [hotel, setHotel] = useState(
         {
-            name: 'Alagon Saigon Hotel & Spa',
-            address: '147 Triều khúc - Sài gòn',
-            excellent: 'Excellent-location - 640m from center',
-            marketing: 'Book a stay over $400 at this property and get a free airport taxi',
-            images: [
-                'https://phunugioi.com/wp-content/uploads/2020/10/anh-ha-noi.jpg',
-                'https://res.klook.com/image/upload/fl_lossy.progressive,w_800,c_fill,q_85/destination/ur2mrg23d91mex03l4mw.jpg',
-                'https://exej2saedb8.exactdn.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-04-at-2.28.40-PM.png?strip=all&lossy=1&ssl=1',
-                'https://exej2saedb8.exactdn.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-04-at-2.28.40-PM.png?strip=all&lossy=1&ssl=1',
-                'https://exej2saedb8.exactdn.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-04-at-2.28.40-PM.png?strip=all&lossy=1&ssl=1',
-                'https://exej2saedb8.exactdn.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-04-at-2.28.40-PM.png?strip=all&lossy=1&ssl=1'
-            ],
-            price: 350,
+            name: '',
+            address: '',
+            featured: '',
+            marketing: '',
+            photos: [],
+            price: 0,
             count_night: 1,
-            description: 'It was our last stop for our South East Asia trip this year after Cambodia and Hanoi, Ho Chi Minh city was an amazingly modern city to my surprise! Upon arrival to the hotel, the lobby area was already out of my expectations with more than necessary marbles everywhere! It was a little "Over the top" for some folks perhaps but they really tried to imitate Las Vegas style hotels such as the Wynn...'
+            description: ''
         }
     )
 
-    const moveToBooking = () => {
-        navigate('/booking')
+    const hanldeGetDetail = (data) => {
+        if(data.statusCode === 200) {
+            setHotel(data.hotel)
+        }
     }
+
+    useEffect(() => {
+        getHotelDetail(hanldeGetDetail, {id: id})
+    }, [])
    
   return (
     <div className="hotel-detail container mt-4">
@@ -36,12 +36,12 @@ function HotelDetailComponent() {
                 <div className="hotel-address-icon"><i class="fa-solid fa-location-dot"></i></div>
                 <p className="hotel-address-content">{hotel.address}</p>
             </div>
-            <p className="hotel-excellent">{hotel.excellent}</p>
+            <p className="hotel-excellent">{hotel.featured}</p>
             <p className="hotel-marketing">{hotel.marketing}</p>
         </div>
         <ul className="hotel-list-img row">
             {
-                hotel.images.map((url) => {
+                hotel.photos.map((url) => {
                     return(
                         <li className="hotel-list-img-item col-4">
                             <img src={`${url}`} alt="hotel-detail" />
@@ -53,7 +53,7 @@ function HotelDetailComponent() {
         <div className="hotel-detail-footer row">
             <div className="hotel-detail-footer-left col-8">
                 <h1 className="footer-left-name">{hotel.name}</h1>
-                <p className="footer-description">{hotel.description}</p>
+                <p className="footer-description">{hotel.title}</p>
             </div>
 
             <div className="hotel-detail-footer-right col-4">
@@ -68,7 +68,9 @@ function HotelDetailComponent() {
                     </div>
 
                     <div className="footer-right-button">
-                        <button onClick={moveToBooking} className="btn btn-primary">Reserve of Book now</button>
+                        <Link to={`/${hotel._id}/booking`}>
+                            <button className="btn btn-primary">Reserve of Book now</button>
+                        </Link>
                     </div>
                 </div>
             </div>

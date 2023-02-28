@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import { Navbar, Form, FormGroup, FormControl, Button } from "react-bootstrap";
+import { loginPage, registerAccount } from "../FetchApi";
 import '../css/login.css'
 
 function LoginComponent() {
@@ -9,15 +10,47 @@ function LoginComponent() {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [usernameRegister, setUsernameRegister] = useState("");
+    const [passwordRegister, setPasswordRegister] = useState("");
   
-    const handleLogin = () => {
+    const callbacklogin = (data) => {
+      if(data.statusCode === 200) {
+        alert('Đăng nhập thành công');
+        localStorage.userId = data.userId;
+        setIsLoggedIn(true);
+        navigate('/home-page');
+      } else {
+        alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+      }
+    }
+
+    const callbackRegister = (data) => {
+      console.log(data);
+    }
+
+    async function handleLogin(){
       // Logic to handle login
-      setIsLoggedIn(true);
-      navigate('/home-page')
+      try {
+        await loginPage(callbacklogin, {
+          username: username,
+          password: password
+        })
+      } catch {
+        alert('Có lỗi trong quá trình đăng nhập!')
+      }
     };
   
-    const handleRegister = () => {
+    async function handleRegister(){
       // Logic to handle registration
+      try {
+        await registerAccount(callbackRegister, {
+          username: usernameRegister,
+          password: passwordRegister
+        });
+        alert('Đăng kí thành công')
+      } catch {
+        alert('Có lỗi trong quá trình đăng kí!')
+      }
     };
   
     const handleLogout = () => {
@@ -49,16 +82,18 @@ function LoginComponent() {
             <h1>Register</h1>
             <FormGroup>
               <FormControl
+                value={usernameRegister}
                 type="text"
                 placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setUsernameRegister(e.target.value)}
               />
             </FormGroup>
             <FormGroup>
               <FormControl
+                value={passwordRegister}
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPasswordRegister(e.target.value)}
               />
             </FormGroup>
             <Button variant="primary" onClick={handleRegister}>

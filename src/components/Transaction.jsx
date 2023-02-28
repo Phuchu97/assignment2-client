@@ -1,44 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../css/transaction.css'
 import { Table  } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { getTransaction } from "../FetchApi";
 
 function TransactionComponent() {
 
-    // Payment method : 0-Credit Card, 1-Cash
-    // Status: 0-Booked, 1-Checkin, 2-Checkout
    const[data, setData] = useState([
     {
-        id: 0,
-        name: 'Alagon Saigon Hotel & Spa',
-        rooms: [101,201],
-        start_date: '01/10/2022',
-        end_date: '03/10/2022',
-        price: 2100,
+        _id: 0,
+        name: '',
+        rooms: [],
+        start_date: '',
+        end_date: '',
+        price: 0,
         payment_method: 0,
-        status: 0
-    },
-    {
-        id: 0,
-        name: 'Alagon Saigon Hotel & Spa',
-        rooms: [101,201],
-        start_date: '01/10/2022',
-        end_date: '03/10/2022',
-        price: 2100,
-        payment_method: 1,
-        status: 1
-    },
-    {
-        id: 0,
-        name: 'Alagon Saigon Hotel & Spa',
-        rooms: [101,201],
-        start_date: '01/10/2022',
-        end_date: '03/10/2022',
-        price: 2100,
-        payment_method: 1,
-        status: 2
+        status: ''
     }
    ])
+
+   useEffect(() => {
+    getTransaction((res) => {
+        console.log(res);
+        if(res.statusCode === 200) {
+            setData(res.list)
+        }
+    })
+   }, [])
    
   return (
     <div className="hotel-detail container mt-4 mb-4">
@@ -93,12 +81,12 @@ function TransactionComponent() {
                                         <td>#</td>
                                         <td>{obj.name}</td>
                                         <td>{obj.rooms.map((room)=>{return(<span>{room},</span>)})}</td>
-                                        <td>{obj.start_date+' - '+obj.end_date}</td>
+                                        <td>{obj.startDate+' - '+obj.endDate}</td>
                                         <td>${obj.price}</td>
-                                        <td>{obj.payment_method===0? 'Credit card' : 'Cash'}</td>
+                                        <td>{obj.payment}</td>
                                         <td>
-                                            <button style={{fontSize: '0.8em'}} className={obj.status===0? 'btn btn-danger' : `${obj.status===1? 'btn btn-success' : 'btn btn-primary'}`}>
-                                                {obj.status===0? 'Booked' : `${obj.status===1? 'Checkin' : 'Checkout'}`}
+                                            <button style={{fontSize: '0.8em'}} className={obj.status=='Booked'? 'btn btn-danger' : `${obj.status==='Checkout'? 'btn btn-success' : 'btn btn-primary'}`}>
+                                                {obj.status}
                                             </button>
                                         </td>
                                     </tr>

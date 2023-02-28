@@ -13,8 +13,8 @@ function HomeComponent() {
         <Routes>
           <Route path="/" element={<LoginComponent/>} />
           <Route path="/home-page" element={<HomePageComponent/>} />
-          <Route path="/hotel-detail" element={<HotelDetailComponent/>} />
-          <Route path="/booking" element={<BookingFormComponent/>} />
+          <Route path="/hotel-detail/:id" element={<HotelDetailComponent/>} />
+          <Route path="/:id/booking" element={<BookingFormComponent/>} />
           <Route path="/transaction" element={<TransactionComponent/>} />
         </Routes>
     </div>

@@ -1,14 +1,14 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import PropertyAreaComponent from "./Property-Area";
 import PropertyTypeComponent from "./Property-type";
 import GuestsLoveComponent from "./Guests-love";
-import { DateRangePicker, DateRange } from "react-date-range"
+import { DateRange } from "react-date-range";
+import { getHotels } from "../../FetchApi";
 import format from "date-fns/format";
-import addDays from "date-fns/addDays";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import '../../css/homepage.css'
-import { Navbar, Form, FormGroup, FormControl, Button, InputGroup, Row, Col } from "react-bootstrap";
+import '../../css/homepage.css';
+import { Navbar, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function HomePageComponent() {
@@ -18,13 +18,14 @@ function HomePageComponent() {
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [room, setRoom] = useState(0);
+  const [hotels, setHotels] = useState([]);
   const [range, setRange] = useState([
     {
       startDate: '',
       endDate: '',
       key: 'selection',
     }
-  ])
+  ]);
   const handleSubmit = (event) => {
     event.preventDefault();
   };
@@ -38,12 +39,18 @@ function HomePageComponent() {
   }
 
   const handleSelectDatePicker = (date) => {
-    console.log(date);
     setRange(date)
   }
   const handleMoveToLogin = () => {
     navigate('/')
   }
+
+  useEffect(() => {
+    getHotels((data) => {
+      setHotels(data);
+    })
+  }, []);
+
   return (
     <div className="home-page">
         <Navbar>
@@ -135,9 +142,9 @@ function HomePageComponent() {
               Logout
           </Button>
         </Navbar>
-        <PropertyAreaComponent />
-        <PropertyTypeComponent />
-        <GuestsLoveComponent />
+        <PropertyAreaComponent hotels={hotels} />
+        <PropertyTypeComponent hotels={hotels} />
+        <GuestsLoveComponent hotels={hotels} />
     </div>
   );
 }
