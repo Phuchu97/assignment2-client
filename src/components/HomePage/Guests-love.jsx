@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 function GuestsLoveComponent(props) {
+ 
+  
   return (
     <div className="guests-love container mt-4 mb-4">
-      <h1 style={{padding: '20px 0', fontSize: '2.5rem', fontWeight: 700}}>Homes guests love</h1>
+      {
+        !props.search && <h1 style={{padding: '20px 0', fontSize: '2.5rem', fontWeight: 700}}>Homes guests love</h1>
+      }
       <div className="row">
           {
             props.hotels !== undefined && props.hotels.slice(0,4).map((obj) => {

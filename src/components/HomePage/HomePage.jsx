@@ -3,7 +3,7 @@ import PropertyAreaComponent from "./Property-Area";
 import PropertyTypeComponent from "./Property-type";
 import GuestsLoveComponent from "./Guests-love";
 import { DateRange } from "react-date-range";
-import { getHotels } from "../../FetchApi";
+import { getHotels, searchHotel } from "../../FetchApi";
 import format from "date-fns/format";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -13,16 +13,17 @@ import { useNavigate } from "react-router-dom";
 
 function HomePageComponent() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [city, setCity] = useState("");
   const [openRange, setOpenRange] = useState(false);
   const [adult, setAdult] = useState(0);
   const [children, setChildren] = useState(0);
   const [room, setRoom] = useState(0);
   const [hotels, setHotels] = useState([]);
+  const [switchSearch, setSwitchSearch] = useState(false);
   const [range, setRange] = useState([
     {
-      startDate: '',
-      endDate: '',
+      startDate: null,
+      endDate: null,
       key: 'selection',
     }
   ]);
@@ -41,7 +42,23 @@ function HomePageComponent() {
   const handleSelectDatePicker = (date) => {
     setRange(date)
   }
+
+  const handleSearch = () => {
+    let data = {
+      city: city,
+      startDate: range[0].startDate,
+      endDate: range[0].endDate,
+      roomNumber: room
+    }
+    setSwitchSearch(true)
+    searchHotel((res) => {
+      console.log(res);
+      setHotels(res)
+    },data)
+  }
+
   const handleMoveToLogin = () => {
+    localStorage.clear();
     navigate('/')
   }
 
@@ -66,9 +83,9 @@ function HomePageComponent() {
                   <FormControl
                     type="text"
                     placeholder="Tìm khách sạn"
-                    value={searchTerm}
+                    value={city}
                     className="mr-sm-2 nav-form-input"
-                    onChange={(event) => setSearchTerm(event.target.value)}
+                    onChange={(event) => setCity(event.target.value)}
                   />
                 </div>
               </Col>
@@ -83,7 +100,7 @@ function HomePageComponent() {
                   <FormControl
                     type="text"
                     className="mr-sm-2 nav-form-input"
-                    value={`${range[0].startDate === ''? 'Start' : format(range[0].startDate, 'dd/MM/yyyy')} to ${range[0].endDate === ''? 'End' : format(range[0].endDate, 'dd/MM/yyyy')}`}
+                    value={`${range[0].startDate === null? 'Start' : format(range[0].startDate, 'dd/MM/yyyy')} to ${range[0].endDate === null? 'End' : format(range[0].endDate, 'dd/MM/yyyy')}`}
                   />
                   {openRange && 
                     <div className="date-range">
@@ -129,6 +146,7 @@ function HomePageComponent() {
                           min={0}
                           value={room}
                           className="count-passenger-input"
+                          onChange={(event) => setRoom(event.target.value)}
                         />
                         <span className="count-passenger-name">room</span>
                       </div>
@@ -137,14 +155,19 @@ function HomePageComponent() {
             </Row>
             </div>
           </Form>
-          <Button style={{fontSize: '2em'}} type="submit">Search</Button>
+          <Button onClick={handleSearch} style={{fontSize: '2em'}} type="submit">Search</Button>
           <Button variant="danger" onClick={handleMoveToLogin} style={{fontSize: '2em'}}>
               Logout
           </Button>
         </Navbar>
-        <PropertyAreaComponent hotels={hotels} />
-        <PropertyTypeComponent hotels={hotels} />
-        <GuestsLoveComponent hotels={hotels} />
+        {
+          !switchSearch && 
+          <div>
+            <PropertyAreaComponent hotels={hotels} />
+            <PropertyTypeComponent hotels={hotels} />
+          </div>
+        }
+        <GuestsLoveComponent hotels={hotels} search={switchSearch} />
     </div>
   );
 }

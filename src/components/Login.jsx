@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar, Form, FormGroup, FormControl, Button } from "react-bootstrap";
 import { loginPage, registerAccount } from "../FetchApi";
 import '../css/login.css'
+import Cookies from 'universal-cookie/es6'
 
 function LoginComponent() {
+    const cookie = new Cookies();
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -17,6 +19,7 @@ function LoginComponent() {
       if(data.statusCode === 200) {
         alert('Đăng nhập thành công');
         localStorage.userId = data.userId;
+        localStorage.token = data.token;
         setIsLoggedIn(true);
         navigate('/home-page');
       } else {

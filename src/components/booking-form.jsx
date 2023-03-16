@@ -39,8 +39,8 @@ function BookingFormComponent() {
             maxPeople: 0,
             price: 0,
             rooms: [],
-            endDate: new Date(),
-            startDate: new Date(),
+            endDate: null,
+            startDate: null,
         }
     ]);
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -49,7 +49,7 @@ function BookingFormComponent() {
         setRange(date);
         let startDate = new Date(date[0].startDate).getTime();
         let endDate = new Date(date[0].endDate).getTime();
-        if(startDate != endDate) {
+        if(startDate !== endDate) {
             checkDateRoom((data) => {
                 if(data.rooms[0] !== undefined) {
                     setListRoom(data.rooms)
@@ -70,6 +70,7 @@ function BookingFormComponent() {
         let data = {
             userId: localStorage.userId,
             hotelId: id,
+            hotel: hotel.name,
             rooms: roomsChecked,
             startDate: format(new Date(range[0].startDate), 'dd/MM/yyyy'),
             endDate: format(new Date(range[0].endDate), 'dd/MM/yyyy'),
@@ -99,6 +100,7 @@ function BookingFormComponent() {
 
     const hanldeGetRoom = (data) => {
         if(data.statusCode === 200) {
+            console.log(data.hotel);
             setListRoom(data.hotel)
         }
     }
@@ -108,7 +110,7 @@ function BookingFormComponent() {
             setRoomsChecked([...roomsChecked, item]);
             setTotalBills(totalBills + price)
         } else {
-            let roomsFIll = roomsChecked.filter(room => room != item);
+            let roomsFIll = roomsChecked.filter(room => room !== item);
             setRoomsChecked([...roomsFIll])
             setTotalBills(totalBills - price)
         }
@@ -221,15 +223,14 @@ function BookingFormComponent() {
             <h2 className="form-title">Selected Rooms</h2>
             <Row>
                 {
-                  listRoom[0].title !== '' &&  listRoom.map((obj) => {
+                  listRoom.map((obj) => {
                         return(
                             <Col lg={6} md={6}>
                                 <Row>
                                     <Col>
                                         <h3>{obj.title}</h3>
-                                        <p>Pay nothing until {format(new Date(obj.endDate), 'dd/MM/yyyy')}</p>
                                         <p>Max people: {obj.maxPeople}</p>
-                                        <p>${obj.price}</p>
+                                        <p>Price: ${obj.price}</p>
                                     </Col>
                                     
                                     <Col>
